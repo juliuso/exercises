@@ -3,8 +3,6 @@
 # DATE: 2019-08-15
 # DESCRIPTION: "Sock Merchant" problem from HackerRank
 # PROBLEM: https://www.hackerrank.com/challenges/sock-merchant
- 
-#!/bin/python3
 
 import math
 import os
@@ -29,7 +27,7 @@ def sockMerchant(n, ar):
     return counter
 
 if __name__ == '__main__':
-    #Test cases
+    # Test cases
     print(sockMerchant(9, [10,20,20,10,10,30,50,10,20]))
     print(sockMerchant(10, [1,1,3,1,2,1,3,3,3,3]))
 
