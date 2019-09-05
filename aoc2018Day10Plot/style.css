@@ -1,0 +1,13 @@
+h1, h2, h3 {
+    text-align: center;
+}
+
+body {
+    background: #565656;
+}
+
+canvas {
+    border: 1px solid red;
+    margin: 0 auto;
+    display: flex;
+}
