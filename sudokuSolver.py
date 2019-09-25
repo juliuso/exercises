@@ -19,7 +19,7 @@ puzzle = [
 ]
 
 # Print puzzle as it mutates.
-def printPuzzle():
+def print_puzzle():
     print('=' * 80)
     for row in range(len(puzzle)):
         print(f'r{row}: {puzzle[row]}')
@@ -28,7 +28,7 @@ def printPuzzle():
 # list_[0] is the set complement of numbers going across each row.
 # list_[1] is the set complement of numbers going down each column.
 # list_[2] is the set complement of numbers within each respective 3x3 group.
-def initializePuzzle():
+def initialize_puzzle():
     for row in range(len(puzzle)):
         for col in range(len(puzzle[row])):
             if puzzle[row][col] is 0:
@@ -46,7 +46,7 @@ def complement(lst):
 
 # While loop in main keeps running until all lists in puzzle
 # are replaced with integers.
-def puzzleFinished() -> 'Boolean checks if puzzle is complete (no list exist)':
+def puzzle_finished():
     for row in range(len(puzzle)):
         for col in range(len(puzzle[row])):
             if type(puzzle[row][col]) is list:
@@ -64,10 +64,10 @@ def intersect():
                     & puzzle[row][col][1]
                     & puzzle[row][col][2]) is 1:
                     _commonElement = (puzzle[row][col][0]
-                                        & puzzle[row][col][1]
-                                        & puzzle[row][col][2]).pop()
+                                      & puzzle[row][col][1]
+                                      & puzzle[row][col][2]).pop()
                     print(f'+++++Set intersection yields 1 element at ({row}, {col}). ' \
-                            f'Replacing set with {_commonElement}.+++++')
+                          f'Replacing set with {_commonElement}.+++++')
                     puzzle[row][col] = _commonElement
 
 # Step 1: Process each row and assign unknown values
@@ -81,7 +81,7 @@ def rows():
 # Step 2: Process each column and assign unknown values
 # the set complement of the column.
 def columns():
-    columns_ = [ [row[col] for row in puzzle] for col in range(len(puzzle)) ]
+    columns_ = [[row[col] for row in puzzle] for col in range(len(puzzle))]
     choices_ = []
     
     for row in columns_:
@@ -105,15 +105,15 @@ def group():
 
     # Bundle each group into a list.
     groups_ = [
-        [ puzzle[0][0:3] + puzzle[1][0:3] + puzzle[2][0:3] ],
-        [ puzzle[0][3:6] + puzzle[1][3:6] + puzzle[2][3:6] ],
-        [ puzzle[0][6:9] + puzzle[1][6:9] + puzzle[2][6:9] ],
-        [ puzzle[3][0:3] + puzzle[4][0:3] + puzzle[5][0:3] ],
-        [ puzzle[3][3:6] + puzzle[4][3:6] + puzzle[5][3:6] ],
-        [ puzzle[3][6:9] + puzzle[4][6:9] + puzzle[5][6:9] ],
-        [ puzzle[6][0:3] + puzzle[7][0:3] + puzzle[8][0:3] ],
-        [ puzzle[6][3:6] + puzzle[7][3:6] + puzzle[8][3:6] ],
-        [ puzzle[6][6:9] + puzzle[7][6:9] + puzzle[8][6:9] ],
+        [puzzle[0][0:3] + puzzle[1][0:3] + puzzle[2][0:3]],
+        [puzzle[0][3:6] + puzzle[1][3:6] + puzzle[2][3:6]],
+        [puzzle[0][6:9] + puzzle[1][6:9] + puzzle[2][6:9]],
+        [puzzle[3][0:3] + puzzle[4][0:3] + puzzle[5][0:3]],
+        [puzzle[3][3:6] + puzzle[4][3:6] + puzzle[5][3:6]],
+        [puzzle[3][6:9] + puzzle[4][6:9] + puzzle[5][6:9]],
+        [puzzle[6][0:3] + puzzle[7][0:3] + puzzle[8][0:3]],
+        [puzzle[6][3:6] + puzzle[7][3:6] + puzzle[8][3:6]],
+        [puzzle[6][6:9] + puzzle[7][6:9] + puzzle[8][6:9]],
     ]
     
     # Holds the complement of groups_.
@@ -167,11 +167,11 @@ def cycle():
     columns()
     group()
     intersect()
-    printPuzzle()
+    print_puzzle()
     sleep(1)
 
 if __name__ == '__main__':
-    initializePuzzle()
+    initialize_puzzle()
 
-    while not puzzleFinished():
+    while not puzzle_finished():
         cycle()
