@@ -21,7 +21,7 @@ puzzle = [
 # Print puzzle as it mutates.
 def print_puzzle():
     print('=' * 80)
-    for row in range(len(puzzle)):
+    for (row, lst) in enumerate(puzzle):
         print(f'r{row}: {puzzle[row]}')
 
 # Each zero replaced with [ set(), set(), set() ]
@@ -29,8 +29,8 @@ def print_puzzle():
 # list_[1] is the set complement of numbers going down each column.
 # list_[2] is the set complement of numbers within each respective 3x3 group.
 def initialize_puzzle():
-    for row in range(len(puzzle)):
-        for col in range(len(puzzle[row])):
+    for (row, lst) in enumerate(puzzle):
+        for (col, _) in enumerate(lst):
             if puzzle[row][col] is 0:
                 puzzle[row][col] = [set(), set(), set()]
 
@@ -47,8 +47,8 @@ def complement(lst):
 # While loop in main keeps running until all lists in puzzle
 # are replaced with integers.
 def puzzle_finished():
-    for row in range(len(puzzle)):
-        for col in range(len(puzzle[row])):
+    for (row, lst) in enumerate(puzzle):
+        for (col, _) in enumerate(lst):
             if type(puzzle[row][col]) is list:
                 return False
     return True
@@ -57,8 +57,8 @@ def puzzle_finished():
 # are intersected. If the intersection returns exactly 1 element, then
 # replace the list of sets with that element.
 def intersect():
-    for row in range(len(puzzle)):
-        for col in range(len(puzzle[row])):
+    for (row, lst) in enumerate(puzzle):
+        for (col, _) in enumerate(lst):
             if type(puzzle[row][col]) is list:
                 if len(puzzle[row][col][0]
                     & puzzle[row][col][1]
@@ -73,22 +73,22 @@ def intersect():
 # Step 1: Process each row and assign unknown values
 # the set complement of the row.
 def rows():
-    for row in range(len(puzzle)):
-        for col in range(len(puzzle[row])):
+    for (row, lst) in enumerate(puzzle):
+        for (col, _) in enumerate(lst):
             if type(puzzle[row][col]) is list:
                 puzzle[row][col][0] = complement(puzzle[row])
 
 # Step 2: Process each column and assign unknown values
 # the set complement of the column.
 def columns():
-    columns_ = [[row[col] for row in puzzle] for col in range(len(puzzle))]
+    columns_ = [[row[col] for row in puzzle] for (col, _) in enumerate(puzzle)]
     choices_ = []
     
     for row in columns_:
         choices_.append(complement(row))
 
-    for row in range(len(puzzle)):
-        for col in range(len(puzzle[row])):
+    for (row, lst) in enumerate(puzzle):
+        for (col, _) in enumerate(lst):
             if type(puzzle[row][col]) is list:
                 puzzle[row][col][1] = choices_[col]
 
@@ -133,8 +133,8 @@ def group():
 
     # Assign the group complement based on the
     # coordinate of each puzzle piece.
-    for row in range(len(puzzle)):
-        for col in range(len(puzzle[row])):
+    for (row, lst) in enumerate(puzzle):
+        for (col, _) in enumerate(lst):
             if type(puzzle[row][col]) is list:
                 if 0 <= row <= 2:
                     if 0 <= col <= 2:
