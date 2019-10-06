@@ -7,22 +7,23 @@ from os import system
 from time import sleep
 
 puzzle = [
-    [5,3,0,0,7,0,0,0,0],
-    [6,0,0,1,9,5,0,0,0],
-    [0,9,8,0,0,0,0,6,0],
-    [8,0,0,0,6,0,0,0,3],
-    [4,0,0,8,0,3,0,0,1],
-    [7,0,0,0,2,0,0,0,6],
-    [0,6,0,0,0,0,2,8,0],
-    [0,0,0,4,1,9,0,0,5],
-    [0,0,0,0,8,0,0,7,9]
+    [5, 3, 0, 0, 7, 0, 0, 0, 0],
+    [6, 0, 0, 1, 9, 5, 0, 0, 0],
+    [0, 9, 8, 0, 0, 0, 0, 6, 0],
+    [8, 0, 0, 0, 6, 0, 0, 0, 3],
+    [4, 0, 0, 8, 0, 3, 0, 0, 1],
+    [7, 0, 0, 0, 2, 0, 0, 0, 6],
+    [0, 6, 0, 0, 0, 0, 2, 8, 0],
+    [0, 0, 0, 4, 1, 9, 0, 0, 5],
+    [0, 0, 0, 0, 8, 0, 0, 7, 9],
 ]
 
 # Print puzzle as it mutates.
 def print_puzzle():
-    print('=' * 80)
+    print("=" * 80)
     for (row, lst) in enumerate(puzzle):
-        print(f'r{row}: {puzzle[row]}')
+        print(f"r{row}: {puzzle[row]}")
+
 
 # Each zero replaced with [ set(), set(), set() ]
 # list_[0] is the set complement of numbers going across each row.
@@ -34,6 +35,7 @@ def initialize_puzzle():
             if puzzle[row][col] is 0:
                 puzzle[row][col] = [set(), set(), set()]
 
+
 # Returns the sudoku set complement of any list passed into it.
 # Input:  [2, 4, 6]
 # Output: {1, 3, 5, 7, 8, 9}
@@ -44,6 +46,7 @@ def complement(lst):
             _deck.remove(el)
     return _deck
 
+
 # While loop in main keeps running until all lists in puzzle
 # are replaced with integers.
 def puzzle_finished():
@@ -53,6 +56,7 @@ def puzzle_finished():
                 return False
     return True
 
+
 # After each epoch of complements, the row, column, and group complements
 # are intersected. If the intersection returns exactly 1 element, then
 # replace the list of sets with that element.
@@ -60,15 +64,19 @@ def intersect():
     for (row, lst) in enumerate(puzzle):
         for (col, _) in enumerate(lst):
             if type(puzzle[row][col]) is list:
-                if len(puzzle[row][col][0]
-                    & puzzle[row][col][1]
-                    & puzzle[row][col][2]) is 1:
-                    _commonElement = (puzzle[row][col][0]
-                                      & puzzle[row][col][1]
-                                      & puzzle[row][col][2]).pop()
-                    print(f'+++++Set intersection yields 1 element at ({row}, {col}). ' \
-                          f'Replacing set with {_commonElement}.+++++')
+                if (
+                    len(puzzle[row][col][0] & puzzle[row][col][1] & puzzle[row][col][2])
+                    is 1
+                ):
+                    _commonElement = (
+                        puzzle[row][col][0] & puzzle[row][col][1] & puzzle[row][col][2]
+                    ).pop()
+                    print(
+                        f"+++++Set intersection yields 1 element at ({row}, {col}). "
+                        f"Replacing set with {_commonElement}.+++++"
+                    )
                     puzzle[row][col] = _commonElement
+
 
 # Step 1: Process each row and assign unknown values
 # the set complement of the row.
@@ -78,12 +86,13 @@ def rows():
             if type(puzzle[row][col]) is list:
                 puzzle[row][col][0] = complement(puzzle[row])
 
+
 # Step 2: Process each column and assign unknown values
 # the set complement of the column.
 def columns():
     columns_ = [[row[col] for row in puzzle] for (col, _) in enumerate(puzzle)]
     choices_ = []
-    
+
     for row in columns_:
         choices_.append(complement(row))
 
@@ -92,14 +101,15 @@ def columns():
             if type(puzzle[row][col]) is list:
                 puzzle[row][col][1] = choices_[col]
 
+
 # Step 3: Process each 3x3 group and assign unknown values
 # the set complement of the group.
 def group():
     # Group number of each 3x3 group in puzzle corresponds
-    # to the row number in groups_. 
+    # to the row number in groups_.
     # 0 | 1 | 2
     # ----------
-    # 3 | 4 | 5 
+    # 3 | 4 | 5
     # ----------
     # 6 | 7 | 8
 
@@ -115,7 +125,7 @@ def group():
         [puzzle[6][3:6] + puzzle[7][3:6] + puzzle[8][3:6]],
         [puzzle[6][6:9] + puzzle[7][6:9] + puzzle[8][6:9]],
     ]
-    
+
     # Holds the complement of groups_.
     choices_ = []
 
@@ -158,11 +168,12 @@ def group():
                     if 6 <= col <= 8:
                         puzzle[row][col][2] = choices_[8]
 
+
 # Will be called continuously until the puzzle's solved.
 # Each cycle ends with a 1 second delay to observe the change
 # in the puzzle's state.
 def cycle():
-    system('clear')
+    system("clear")
     rows()
     columns()
     group()
@@ -170,7 +181,8 @@ def cycle():
     print_puzzle()
     sleep(1)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     initialize_puzzle()
 
     while not puzzle_finished():
