@@ -72,7 +72,7 @@ def intersect():
                         puzzle[row][col][0] & puzzle[row][col][1] & puzzle[row][col][2]
                     ).pop()
                     print(
-                        f"+++++Set intersection yields 1 element at ({row}, {col}). "
+                        f"+++++Set intersection yields 1 element at ({row}, {col})."
                         f"Replacing set with {_commonElement}.+++++"
                     )
                     puzzle[row][col] = _commonElement
@@ -90,7 +90,7 @@ def rows():
 # Step 2: Process each column and assign unknown values
 # the set complement of the column.
 def columns():
-    columns_ = [[row[col] for row in puzzle] for (col, _) in enumerate(puzzle)]
+    columns_ = [list(col) for col in zip(*puzzle)]
     choices_ = []
 
     for row in columns_:

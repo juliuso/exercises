@@ -14,6 +14,7 @@ puzzle = [
     [0, 0, 0, 0, 8, 0, 0, 7, 9],
 ]
 
+
 if __name__ == "__main__":
     p = np.array(puzzle)
     puzzle_groups = []
