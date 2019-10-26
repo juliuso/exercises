@@ -29,11 +29,26 @@ def get_column_complement(row, col):
 
 def get_group_complement(row, col):
     # Pending implementation.
-    groups = []
+    _ = []
 
     for split_row_thirds in np.vsplit(puzzle, 3):
         for split_col_thirds in np.hsplit(split_row_thirds, 3):
-            groups.append(split_col_thirds.flatten())
+            _.append(split_col_thirds.flatten())
+
+    groups = np.array(_)
+
+    group_key = np.repeat(np.repeat(np.arange(9), 3).reshape(3, 9), 3, axis=0)
+    """
+    array([[0, 0, 0, 1, 1, 1, 2, 2, 2],
+       [0, 0, 0, 1, 1, 1, 2, 2, 2],
+       [0, 0, 0, 1, 1, 1, 2, 2, 2],
+       [3, 3, 3, 4, 4, 4, 5, 5, 5],
+       [3, 3, 3, 4, 4, 4, 5, 5, 5],
+       [3, 3, 3, 4, 4, 4, 5, 5, 5],
+       [6, 6, 6, 7, 7, 7, 8, 8, 8],
+       [6, 6, 6, 7, 7, 7, 8, 8, 8],
+       [6, 6, 6, 7, 7, 7, 8, 8, 8]])
+    """
 
     # return set
     return {}
