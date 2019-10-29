@@ -19,15 +19,14 @@ puzzle = np.array(
         [0, 0, 0, 0, 8, 0, 0, 7, 9],
     ]
 )
-# Bring this into driver() after finished.
 deck = {1, 2, 3, 4, 5, 6, 7, 8, 9}
 
 
-def get_row_complement(row, col):
+def get_row_complement(row):
     return deck - set(puzzle[row]) - {0}
 
 
-def get_column_complement(row, col):
+def get_column_complement(col):
     return deck - set((puzzle.T)[col]) - {0}
 
 
@@ -40,20 +39,9 @@ def get_group_complement(row, col):
 
     groups = np.array(_)
 
+    # Creates a key lookup table of range(9) to get the subgroup complement in _.
     group_key = np.repeat(np.repeat(np.arange(9), 3).reshape(3, 9), 3, axis=0)
-    """
-    array([[0, 0, 0, 1, 1, 1, 2, 2, 2],
-       [0, 0, 0, 1, 1, 1, 2, 2, 2],
-       [0, 0, 0, 1, 1, 1, 2, 2, 2],
-       [3, 3, 3, 4, 4, 4, 5, 5, 5],
-       [3, 3, 3, 4, 4, 4, 5, 5, 5],
-       [3, 3, 3, 4, 4, 4, 5, 5, 5],
-       [6, 6, 6, 7, 7, 7, 8, 8, 8],
-       [6, 6, 6, 7, 7, 7, 8, 8, 8],
-       [6, 6, 6, 7, 7, 7, 8, 8, 8]])
-    """
 
-    # return set
     return deck - set(groups[group_key[row][col]]) - {0}
 
 
@@ -62,8 +50,8 @@ def driver():
         for (col, _) in enumerate(lst):
             if puzzle[row][col] == 0:
                 intersection = (
-                    get_row_complement(row, col)
-                    & get_column_complement(row, col)
+                    get_row_complement(row)
+                    & get_column_complement(col)
                     & get_group_complement(row, col)
                 )
                 if len(intersection) == 1:
