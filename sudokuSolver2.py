@@ -3,7 +3,6 @@
 # DATE: 2019-10-29
 # DESCRIPTION: "Sudoku Solver" problem from codewars v2
 # PROBLEM: https://www.codewars.com/kata/sudoku-solver/train
-from os import system
 import numpy as np
 
 puzzle = np.array(
