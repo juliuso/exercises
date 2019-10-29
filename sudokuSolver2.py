@@ -1,5 +1,9 @@
 #!/usr/bin/env python
-import os
+# AUTHOR: jo
+# DATE: 2019-10-29
+# DESCRIPTION: "Sudoku Solver" problem from codewars v2
+# PROBLEM: https://www.codewars.com/kata/sudoku-solver/train
+from os import system
 import numpy as np
 
 puzzle = np.array(
@@ -28,7 +32,6 @@ def get_column_complement(row, col):
 
 
 def get_group_complement(row, col):
-    # Pending implementation.
     _ = []
 
     for split_row_thirds in np.vsplit(puzzle, 3):
@@ -51,25 +54,32 @@ def get_group_complement(row, col):
     """
 
     # return set
-    return {}
+    return deck - set(groups[group_key[row][col]]) - {0}
 
 
 def driver():
     for (row, lst) in enumerate(puzzle):
         for (col, _) in enumerate(lst):
-            if puzzle[row][col] is 0:
+            if puzzle[row][col] == 0:
                 intersection = (
-                    (deck - set(puzzle[row]) - {0})
-                    & (deck - set((puzzle.T)[row]) - {0})
+                    get_row_complement(row, col)
+                    & get_column_complement(row, col)
                     & get_group_complement(row, col)
                 )
-                if len(intersection) is 1:
-                    puzzle[row][col] = intersection
+                if len(intersection) == 1:
+                    puzzle[row][col] = intersection.pop()
+
+
+def zero_in_puzzle():
+    if 0 in puzzle.flatten():
+        return True
+    else:
+        return False
 
 
 if __name__ == "__main__":
-    os.system("clear")
+    while zero_in_puzzle():
+        driver()
 
-
-# get specific column: [list(col) for col in zip(*p)][2]
+    print(puzzle)
 
