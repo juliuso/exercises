@@ -58,10 +58,7 @@ def driver():
 
 
 def zero_in_puzzle():
-    if 0 in puzzle.flatten():
-        return True
-    else:
-        return False
+    return True if 0 in puzzle else False
 
 
 if __name__ == "__main__":
