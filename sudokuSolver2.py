@@ -49,12 +49,8 @@ def driver():
                     puzzle[row][col] = intersection.pop()
 
 
-def zero_in_puzzle():
-    return True if 0 in puzzle else False
-
-
 if __name__ == "__main__":
-    while zero_in_puzzle():
+    while 0 in puzzle:
         driver()
 
     print(puzzle)
