@@ -21,14 +21,6 @@ puzzle = np.array(
 deck = {1, 2, 3, 4, 5, 6, 7, 8, 9}
 
 
-def get_row_complement(row):
-    return deck - set(puzzle[row]) - {0}
-
-
-def get_column_complement(col):
-    return deck - set((puzzle.T)[col]) - {0}
-
-
 def get_group_complement(row, col):
     _ = []
 
@@ -49,8 +41,8 @@ def driver():
         for (col, _) in enumerate(lst):
             if puzzle[row][col] == 0:
                 intersection = (
-                    get_row_complement(row)
-                    & get_column_complement(col)
+                    (deck - set(puzzle[row]) - {0})
+                    & (deck - set((puzzle.T)[col]) - {0})
                     & get_group_complement(row, col)
                 )
                 if len(intersection) == 1:
